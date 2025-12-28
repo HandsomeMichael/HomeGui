@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class HomeGuiClient implements ClientModInitializer {
+
+    private static final KeyBinding.Category HOMEGUI_CATEGORY = KeyBinding.Category.create(Identifier.of("homegui", "main"));
     
     public static final String MOD_ID = "homegui";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
@@ -23,15 +25,13 @@ public class HomeGuiClient implements ClientModInitializer {
     public void onInitializeClient() {
         LOGGER.info("Home GUI Mod chargé!");
         
-        // Enregistrer la touche - Updated for 1.21.x
-        openGuiKey = new KeyBinding(
+        // Enregistrer la touche
+        openGuiKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
             "key.homegui.open_gui",        // Nom de la touche
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_H,               // Touche H par défaut
-            "category.homegui.main"        // Catégorie
-        );
-        
-        KeyBindingHelper.registerKeyBinding(openGuiKey);
+            HOMEGUI_CATEGORY        // Catégorie
+        ));
         
         // Écouter les appuis de touche
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -52,3 +52,4 @@ public class HomeGuiClient implements ClientModInitializer {
     }
 
 }
+
