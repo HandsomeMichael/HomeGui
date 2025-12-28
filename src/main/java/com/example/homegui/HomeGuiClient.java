@@ -23,13 +23,15 @@ public class HomeGuiClient implements ClientModInitializer {
     public void onInitializeClient() {
         LOGGER.info("Home GUI Mod chargé!");
         
-        // Enregistrer la touche
-        openGuiKey = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+        // Enregistrer la touche - Updated for 1.21.x
+        openGuiKey = new KeyBinding(
             "key.homegui.open_gui",        // Nom de la touche
             InputUtil.Type.KEYSYM,
             GLFW.GLFW_KEY_H,               // Touche H par défaut
             "category.homegui.main"        // Catégorie
-        ));
+        );
+        
+        KeyBindingHelper.registerKeyBinding(openGuiKey);
         
         // Écouter les appuis de touche
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
@@ -48,4 +50,5 @@ public class HomeGuiClient implements ClientModInitializer {
         // Ouvrir le GUI
         client.setScreen(new HomesScreen());
     }
+
 }
